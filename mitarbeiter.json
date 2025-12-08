@@ -1,0 +1,45 @@
+[
+    {
+        "name": "Herr Osman Salman",
+        "arbeitstage": [
+            {
+                "datum": "2025-09-30",
+                "basis": 8,
+                "ueber": 4
+            },
+            {
+                "datum": "2025-10-30",
+                "basis": 8,
+                "ueber": 0
+            }
+        ],
+        "ueberstunden": 4,
+        "lohn_pro_stunde": 16.99,
+        "lohn_ueberstunde": 17.99,
+        "stunden_pro_tag": 12
+    },
+    {
+        "name": "Herr Hassan Mousser",
+        "lohn_pro_stunde": 13.99,
+        "lohn_ueberstunde": 14.0,
+        "arbeitstage": [
+            {
+                "datum": "202",
+                "basis": 8,
+                "ueber": 8
+            }
+        ]
+    },
+    {
+        "name": "Frau Moussa Aicha",
+        "lohn_pro_stunde": 14.99,
+        "lohn_ueberstunde": 15.99,
+        "arbeitstage": [
+            {
+                "datum": "2025-09-01",
+                "basis": 8,
+                "ueber": 4
+            }
+        ]
+    }
+]
