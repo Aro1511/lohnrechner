@@ -7,7 +7,7 @@ st.set_page_config(page_title="Mitarbeiterverwaltung", page_icon="💼", layout=
 
 # --- CSS laden ---
 def load_css(file_name: str):
-    with open(file_name) as f:
+    with open(file_name, "r", encoding="utf-8") as f:
         st.markdown(f"<style>{f.read()}</style>", unsafe_allow_html=True)
 
 load_css("style.css")
@@ -48,12 +48,32 @@ if "bearbeiten_index" not in st.session_state:
 if "bearbeite_tag_key" not in st.session_state:
     st.session_state.bearbeite_tag_key = {}
 
-# Header
-col1, col2 = st.columns([3, 1])
+# --- Übersichtsdaten für Header ---
+uebersichten = generiere_uebersicht()
+if uebersichten:
+    total_gesamtlohn = sum(e["Gesamtlohn (€)"] for e in uebersichten)
+    total_basisstunden = sum(e["Basisstunden"] for e in uebersichten)
+    total_ueberstunden = sum(e["Überstunden"] for e in uebersichten)
+else:
+    total_gesamtlohn = 0
+    total_basisstunden = 0
+    total_ueberstunden = 0
+
+def format_euro_de(value: float) -> str:
+    # Format 12345.67 -> 12.345,67
+    s = f"{value:,.2f}"
+    return s.replace(",", "X").replace(".", ",").replace("X", ".")
+
+# --- Header mit Summen-Widgets ---
+col1, col2, col3, col4 = st.columns([2, 1, 1, 1])
 with col1:
     st.title("💼 Mitarbeiterverwaltung")
 with col2:
-    st.metric("alle Mitarbeiter", f"{rechner.anzahl_mitarbeiter()} Mitarbeiter")
+    st.metric("Alle Mitarbeiter", f"{rechner.anzahl_mitarbeiter()}")
+with col3:
+    st.metric("Basisstunden", f"{int(total_basisstunden)}")
+with col4:
+    st.metric("Überstunden", f"{int(total_ueberstunden)}")
 
 st.divider()
 
@@ -104,6 +124,9 @@ if st.session_state.liste_anzeigen:
         if suchbegriff.lower() in m.get("name", "").lower()
     ] if suchbegriff else list(enumerate(rechner.mitarbeiter))
 
+    # Alphabetisch sortieren nach Name
+    gefilterte_mitarbeiter.sort(key=lambda x: x[1].get("name", "").lower())
+
     if not gefilterte_mitarbeiter:
         st.info("Keine Mitarbeiter gefunden.")
     else:
@@ -121,7 +144,6 @@ if st.session_state.liste_anzeigen:
                         st.write(f'- {d}: Basis {tag["basis"]} Std, Überstunden {tag["ueber"]} Std')
 
                         if st.session_state.role == "admin":
-                            # Admin darf bearbeiten/löschen
                             c1, c2 = st.columns([1, 1])
                             with c1:
                                 if st.button("📝 Tag bearbeiten", key=f"btn_edit_tag_{i}_{d}"):
@@ -152,9 +174,9 @@ if st.session_state.liste_anzeigen:
                                 st.success("Arbeitstag hinzugefügt ✅")
                                 st.rerun()
 
-                # Gesamteinkommen
+                # Gesamteinkommen für den Mitarbeiter
                 lohn = rechner.berechne_lohn(m)
-                st.success(f"➡️ Gesamtlohn: {lohn} €")
+                st.success(f"➡️ Gesamtlohn: {format_euro_de(lohn)} €")
 
                 # Admin darf Mitarbeiter bearbeiten/löschen
                 if st.session_state.role == "admin":
@@ -175,15 +197,17 @@ if st.session_state.liste_anzeigen:
 st.divider()
 st.header("📊 Mitarbeiter-Übersicht")
 
-uebersichten = generiere_uebersicht()
 if not uebersichten:
     st.info("Noch keine Daten vorhanden.")
 else:
+    # Tabelle
     st.dataframe(uebersichten, use_container_width=True)
 
-    # Summen-Widget
-    total_gesamtlohn = sum(e["Gesamtlohn (€)"] for e in uebersichten)
-    total_basisstunden = sum(e["Basisstunden"] for e in uebersichten)
-    total_ueberstunden = sum(e["Überstunden"] for e in uebersichten)
-
-    c1, c2, c3
+    # Zusammenfassung unten zusätzlich (optional)
+    c1, c2, c3 = st.columns(3)
+    with c1:
+        st.metric("Gesamtlohn (€)", format_euro_de(total_gesamtlohn))
+    with c2:
+        st.metric("Basisstunden", f"{int(total_basisstunden)}")
+    with c3:
+        st.metric("Überstunden", f"{int(total_ueberstunden)}")

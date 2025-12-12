@@ -1,27 +1,35 @@
-[]/* style.css */
+/* style.css */
 
 /* Gesamter Hintergrund hellblau */
-body {
-    background-color: lightblue;
+html, body, [data-testid="stAppViewContainer"] {
+    background-color: lightblue !important;
     font-family: "Segoe UI", Arial, sans-serif;
+    color: black !important; /* Alle Schriften schwarz */
 }
 
-/* Überschriften mit gelbem Hintergrund */
+/* Seitenleiste ebenfalls einfärben */
+[data-testid="stSidebar"] {
+    background-color: lightblue !important;
+    color: black !important; /* Schrift in Sidebar schwarz */
+}
+
+/* Überschriften mit grünem Hintergrund und fett */
 h1, h2, h3 {
-    background-color: yellow;
+    background-color: green;
     padding: 6px;
     border-radius: 4px;
-    color: black;
+    color: black !important;
+    font-weight: bold; /* Fett */
 }
 
-/* Buttons dunkelgrün */
+/* Buttons dunkelgrün mit fetter Schrift */
 .stButton>button {
     background-color: darkgreen;
-    color: white;
+    color: black !important; /* Schrift schwarz */
+    font-weight: bold; /* Fett */
     border-radius: 6px;
     padding: 8px 16px;
     border: 2px solid saddlebrown; /* Rahmen hellbraun */
-    font-weight: bold;
     transition: 0.3s;
 }
 
@@ -38,6 +46,7 @@ h1, h2, h3 {
     border: 2px solid saddlebrown; /* Rahmen hellbraun */
     border-radius: 6px;
     padding: 6px;
+    color: black !important; /* Schrift schwarz */
 }
 
 /* Tabellen mit hellbraunem Rahmen */
@@ -45,4 +54,5 @@ h1, h2, h3 {
     border: 2px solid saddlebrown;
     border-radius: 6px;
     overflow: hidden;
+    color: black !important; /* Schrift schwarz */
 }
