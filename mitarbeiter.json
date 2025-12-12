@@ -41,5 +41,17 @@
                 "ueber": 4
             }
         ]
+    },
+    {
+        "name": "Hanz Horz",
+        "lohn_pro_stunde": 12.99,
+        "lohn_ueberstunde": 13.99,
+        "arbeitstage": [
+            {
+                "datum": "2025_12_20",
+                "basis": 8,
+                "ueber": 0
+            }
+        ]
     }
 ]

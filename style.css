@@ -1,0 +1,48 @@
+[]/* style.css */
+
+/* Gesamter Hintergrund hellblau */
+body {
+    background-color: lightblue;
+    font-family: "Segoe UI", Arial, sans-serif;
+}
+
+/* Überschriften mit gelbem Hintergrund */
+h1, h2, h3 {
+    background-color: yellow;
+    padding: 6px;
+    border-radius: 4px;
+    color: black;
+}
+
+/* Buttons dunkelgrün */
+.stButton>button {
+    background-color: darkgreen;
+    color: white;
+    border-radius: 6px;
+    padding: 8px 16px;
+    border: 2px solid saddlebrown; /* Rahmen hellbraun */
+    font-weight: bold;
+    transition: 0.3s;
+}
+
+.stButton>button:hover {
+    background-color: green;
+    transform: scale(1.05);
+}
+
+/* Eingabefelder hellgrau */
+.stTextInput>div>input,
+.stNumberInput>div>input,
+.stPasswordInput>div>input {
+    background-color: lightgray;
+    border: 2px solid saddlebrown; /* Rahmen hellbraun */
+    border-radius: 6px;
+    padding: 6px;
+}
+
+/* Tabellen mit hellbraunem Rahmen */
+.stDataFrame {
+    border: 2px solid saddlebrown;
+    border-radius: 6px;
+    overflow: hidden;
+}
